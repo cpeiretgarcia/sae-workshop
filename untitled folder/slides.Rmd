@@ -3,32 +3,37 @@ title: 'Mapping the Unseen: Small Area Estimation for Urban Analysis'
 author: "Clara Peiret-García"
 date: \today
 output: beamer_presentation
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+# Introduction to Small Area Estimation
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Introduction to SAE
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+-   We live in a world with increasingly complex problems (e.g. poverty, inequalities, climate change, etc.) and data is essential for solving them.
 
-## Slide with Bullets
+-   Many of these problems require identifying specific groups within a given population, in order to better understand the problem, or to develop better-targeted policies.
 
--   Bullet 1
--   Bullet 2
--   Bullet 3
+-   Additionally, small area statistics are also needed in order to justify the need for funding in certain regions.
 
-## Slide with R Output
+------------------------------------------------------------------------
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+## The role of surveys
 
-## Slide with Plot
+-   Sample surveys are cost-effective methods for obtaining information about wide-ranging topics at frequent intervals over time [@ghosh1994small].
 
-```{r pressure}
-plot(pressure)
-```
+-   Surveys provide reliable estimators for areas where the sample size is large (large domains). These estimators can rely solely on area information and still be trust-worthy. These types of estimators are called ***direct estimators**.*
+
+-   However, when data is scarce, direct estimators are likely to yield too large standard errors, due to the small size of the sample in the area. This makes these estimators unreliable.
+
+-   The solution SAE methods propose is the use of ***indirect estimators,*** which employ information from related areas,
+
+# Key Concepts
+
+-   **Small area (domain):** sub-population of interest for which data is scarce. It does not relate to the geographical size of the area, just to the size of the survey sample.
+
+-   **Direct estimator:** estimator based on area sample only.
