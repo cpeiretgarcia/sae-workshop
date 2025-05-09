@@ -1,0 +1,306 @@
+---
+title: "Mapping the Unseen <br> <span style='font-size:.5em; font-weight: 500'>A practical guide to Small Area Estimation</span>"
+subtitle: "<br><span style='color:#525252; font-size:1.0em;'>CUPUM 2025</span>"
+format: 
+   revealjs:
+     transition: fade
+     theme: slides-theme.scss
+     css: style.css
+     footer: '[]()'
+     mainfont: Avenir Book
+---
+
+## Workshop structure
+
+-   **Theoretical lecture on Small Area Estimation**
+    -   Introduction to Small Area Estimation
+    -   SAE Methods
+    -   SAE Applications
+    -   Some guidelines for using SAE
+-   **Practical session in `R`**
+
+# Introduction to Small Area Estimation
+
+## Why do we need Small Area Estimation?
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+
+- Sometimes, as researchers, we want to generate estimates at very specific georgaphical levels.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- Imagine you are a researcher trying to understand mobility behaviours for a specific neighbourhood.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- You have access to individual data from a national travel survey, but not for that neighbourhood.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- This is a common issue: surveys often do not sample enough people in our are of interest to produce reliable estimates.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- This is where Small Area Estimation comes in -- it helps us *borrow strength* from other data to fill in these gaps.
+:::
+
+## This workshop
+
+### What we will cover
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- Overview on SAE methods
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- The basics: Direct estimation methods
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- Indirect estimation methods: Statistical approaches to SAE
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- Intuitive understanding of the methods
+- Practical guide on when to use them
+:::
+
+
+### What we will not cover
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- Geographical approaches to SAE (spatial microsimulation)
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- In-depth statistical background of the methods
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+- We will provide additional resources at the end of the lecture
+:::
+
+## The advantages of SAE
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+-   **Overcome data limitations at local levels**. Traditional surveys often lack large-enough samples to produce reliable statistics at local levels. SAE methods allow to make statistically valid estimates even in areas with limited or no survey data.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+-   **Support evidence-based policy-making at local level**. Govenrments and institutions increasingly require local-level data to allocate resources more effectively. SAE can help in gathering the evidence required for planning, monitoring, and evaluating progress on key indicators at the scale where interventions happen.
+:::
+
+## What is SAE?
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+-   Small Area Estimation is a statistical modelling technique that uses **survey data** and **auxiliary information** (e.g. census data, administrative data, satellite imagery) to produce estimates of variables of interest at more granular level for the **domains** of interest.
+:::
+
+::: {.fragment .fade-in style="font-size: 80%;"}
+-   SAE methods produce "new" statistics that were not available before, at higher levels of **accuracy** than **direct estimates** generated through surveys.
+:::
+
+## Some concepts
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Survey data**: information collected from a sample of individuals through their responses to questions.
+:::
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Sample**: smaller selection or subset of a larger group called population. The sample should be representative of the full population.
+:::
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Population**: full group we are interested in (e.g., all people in a country).
+:::
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Small area** (or **domain**): small geographical area or spatial population unit for which reliable statistics cannot be produced due to limitations in the available data.
+:::
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Estimator**: rule or formula to approximate unknown population parameters (e.g. sample mean, poverty rates).
+:::
+
+::: {.fragment .fade-in style="font-size: 65%;"}
+-   **Accuracy**: distance between the statistical estimates and the "correct" values. It includes random errors (unpredictable and due to chance e.g. stopwatch), and systematic errors (consistent and repeatable e.g. biased scale)
+:::
+
+------------------------------------------------------------------------
+
+![Accuracy vs precision](errors.png)
+
+------------------------------------------------------------------------
+
+## SAE techniques
+
+-   There are many SAE techniques -- the choice will depend on the **availability of auxiliary data** and the **relationship** between these data and the variable of interest.
+
+------------------------------------------------------------------------
+
+## Summart of SAE methods
+![SAE methods overview (Adapted from Rahman, 2008)](SAE_methods.jpg){width="2000"}
+
+## What will we cover?
+
+![SAE methods overview (Adapted from Rahman, 2008)](SAE_contents_diagram.jpg){width="2000"}
+
+# Direct estimation methods
+
+## A brief note on survey sampling
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   Sample surveys are cost-effective methods for obtaining information about wide-ranging topics at frequent intervals over time.
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   Surveys provide reliable estimators for areas where the sample size is large (large domains). These estimators can rely solely on area information and still be trust-worthy. These types of estimators are called ***direct estimators**.*
+:::
+
+## Direct estimation methods
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   Also known as **design-based methods**, they rely **exclusively** on **domain-level** data.
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   These estimators only work when the available sample is **large enough** to cover all domains of interest with **sufficient data** in each area. If a domain is not included in the sample, no estimates are produced for that domain.
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   **What if there is data, but it is scarce?** The estimates produced by design-based methods will be unreliable due to large errors.
+:::
+
+## The Horvitz-Thompson estimator
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   It is used to estimate totals or means in a population from a probability sample.
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   It accounts for the unequal probability of inclusion in the sample.
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   The H-T estimator for the mean of area $d$ is:
+
+$$
+\hat{\bar{Y_d}} = \frac{1}{N_d} \sum_{i \in s_d} w_{di}Y_{di}
+$$
+:::
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   where $w_{id}$ is the reciprocal of the inclusion probabilities for observation $i$ in subarea $d$.
+
+$$
+w_{id} = \frac{1}{\pi_{di}}
+$$
+:::
+
+## H-T properties
+
+::: {.fragment .fade-in style="font-size: 70%;"}
+-   Thanks to the inclusion of weights, the H-T estimator is **design-unbiased** for the total of area $d$. This means that, on average, across all possible samples, the estimate is correct.
+:::
+
+---
+::: {.fragment .fade-in style="font-size: 60%;"}
+
+```{r, echo=TRUE}
+# Generate a fake population with three units
+population <- data.frame(
+  unit = 1:3,
+  y = c(10, 20, 30)  # Variable of interest
+)
+
+# Show population
+population
+```
+:::
+
+::: {.fragment .fade-in style="font-size: 60%;"}
+```{r, echo=TRUE }
+# True population total
+true_total <- sum(population$y)
+true_total
+```
+:::
+
+::: {.fragment .fade-in style="font-size: 60%;"}
+```{r, echo=TRUE}
+# All possible samples of size 2
+library(gtools)
+samples <- combinations(n = 3, r = 2)
+
+samples_df <- data.frame(
+  sample1 = samples[, 1],
+  sample2 = samples[, 2]
+)
+
+samples_df
+```
+:::
+
+
+## 
+
+::: {.fragment .fade-in style="font-size: 60%;"}
+```{r, echo=TRUE}
+# Inclusion probabilities
+inclusion_probs <- rep(2/3, 3)
+names(inclusion_probs) <- population$unit
+inclusion_probs
+
+```
+:::
+
+::: {.fragment .fade-in style="font-size: 60%;"}
+```{r, echo = TRUE}
+# Function to compute HT estimate for a sample
+ht_estimate <- function(sample_units, population, inclusion_probs) {
+  y_values <- population$y[sample_units]
+  pi_values <- inclusion_probs[as.character(sample_units)]
+  sum(y_values / pi_values)
+}
+
+# Calculate HT estimate for each possible sample
+ht_estimates <- apply(samples, 1, ht_estimate, 
+                      population = population, 
+                      inclusion_probs = inclusion_probs)
+
+ht_estimates
+
+```
+
+:::
+
+::: {.fragment .fade-in style="font-size: 60%;"}
+```{r, echo=TRUE}
+expected_ht <- mean(ht_estimates)
+expected_ht
+```
+:::
+
+# Model-based methods -- The statistical approach
+
+
+
+## Explicit modelling techniques
+
+- They use models that link the small area estimates with auxiliary information.
+- Thye increase the estimator's accuracy when direct estimation is not possible.
+- They allow for incorporating information from multiple data sources.
+
+## Area-level models
+
+- These models use **area-specific auxiliary data** to project small area total estimates.
+- The most commonly used one is the Fay-Herriot model.
+- **Best use cases** -- Data is aggregated at area level (e.g. regional income estimates).
+- **Data requirements** -- Survey data for small areas + Auxiliary data from census or other administrative records.
+
+## Unit-level models
+
+- These models use **unit-specific data** (e.g. individuals or households).
+- 
+
+
